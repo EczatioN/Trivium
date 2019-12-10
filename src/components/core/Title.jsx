@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-function Title({text}) {
+function Title({children}) {
     return (
         <Styledh1>
-            {text}
+            {children}
         </Styledh1>
     )
 }
@@ -16,7 +16,7 @@ text-align: center;
 `;
 
 Title.propTypes = {
-    text: PropTypes.string
+    children: PropTypes.string
 }
 
 export default Title

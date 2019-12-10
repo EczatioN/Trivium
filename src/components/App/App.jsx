@@ -15,6 +15,7 @@ function App() {
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
+  font-family: Nunito;
 `;
 
 export default App;
