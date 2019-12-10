@@ -1,20 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-function NavButton({ children }) {
+function NavButton({ children, to }) {
   return (
-    <StyledButton>
+    <StyledLink to={to}>
       {children}
-    </StyledButton>
+    </StyledLink>
   )
 }
 
 NavButton.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element)
+  children: PropTypes.any,
+  to: PropTypes.string
 }
 
-const StyledButton = styled.button`
+const StyledLink = styled(Link)`
+  display: flex;
   flex-grow: 1;
   background: #004A97;
   border: none;
