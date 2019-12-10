@@ -1,5 +1,5 @@
 import React from 'react';
-//import styled from 'styled-components';
+import styled from 'styled-components';
 //import { useAuthState } from 'react-firebase-hooks/auth';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -10,18 +10,18 @@ function App() {
   //console.log(firebase);
   //const [user, loading, error] = useAuthState(window.firebase.auth.Auth);
   return (
-    <Router>
+    <StyledRouter>
       {true &&
         <React.Fragment>
           <PageContainer />
           <Navbar />
         </React.Fragment>
       }
-    </Router>
+    </StyledRouter>
   );
 }
 
-const Layout = styled.div`
+const StyledRouter = styled(Router)`
   display: flex;
   flex-direction: column;
   font-family: Nunito;
