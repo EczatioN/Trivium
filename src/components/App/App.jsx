@@ -10,18 +10,20 @@ function App() {
   //console.log(firebase);
   //const [user, loading, error] = useAuthState(window.firebase.auth.Auth);
   return (
-    <StyledRouter>
-      {true &&
-        <React.Fragment>
-          <PageContainer />
-          <Navbar />
-        </React.Fragment>
-      }
-    </StyledRouter>
+    <Layout>
+      <Router>
+        {true &&
+          <React.Fragment>
+            <PageContainer />
+            <Navbar />
+          </React.Fragment>
+        }
+      </Router>
+    </Layout>
   );
 }
 
-const StyledRouter = styled(Router)`
+const Layout = styled.div`
   display: flex;
   flex-direction: column;
   font-family: Nunito;
