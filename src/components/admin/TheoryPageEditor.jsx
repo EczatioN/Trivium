@@ -1,27 +1,44 @@
-import React, {useState} from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '../core/Button';
 import Title from '../core/Title';
 import TextBox from '../core//TextBox'
+import { FirebaseContext } from '../Firebase';
+import { useDocumentData } from 'react-firebase-hooks/firestore/';
+import LoadingCircle from '../core/LoadingCircle';
 
-function TheoryPageEditor(props) {
+function TheoryPageEditor({ match }) {
+    const firebase = useContext(FirebaseContext)
+    const [excercise, loading, error] = useDocumentData(
+        firebase.db.doc(`excercises/${match.params.area}`)
+    );
     return (
-        <Layout>
-            <Title>Ändra Titel</Title>
-           <TextBox></TextBox>
-           <Title>Ändra text</Title>
-           <TextBox></TextBox>
-            <Title>Ändra huvudbild, bildlänk</Title>
-           <TextBox></TextBox>
-           <Title>Ändra Maxpoäng</Title>
-           <TextBox></TextBox>
-           <Title>Ändra sökväg</Title>
-           <TextBox></TextBox>
-           <Title>Ändra databasnamn</Title>
-           <TextBox></TextBox>
-           <Button icon="save" backgroundColor="#43b950" backgroundColorAfter="#3aaa47"></Button>
-        </Layout>
+        <React.Fragment>
+            {error &&
+                `Error: ${error}`
+            }
+            {
+                loading &&
+                <LoadingCircle />
+            }
+            {
+                excercise &&
+                <Layout>
+                    <Title>Ändra Titel</Title>
+                    <TextBox defaultText= {excercise.name}/>
+                    <Title>Teoritext</Title>
+                    <TextBox defaultText= {excercise.theory}/>
+                    <Title>Ändra huvudbild, bildlänk</Title>
+                    <TextBox defaultText= {excercise.headerImageUrl}/>
+                    <Title>Ändra Maxpoäng</Title>
+                    <TextBox defaultText= {excercise.maxPoints}/>
+                    <Title>Ändra databasnamn</Title>
+                    <TextBox defaultText= {excercise.id}/>
+                    <Button icon="save" backgroundColor="#43b950" backgroundColorAfter="#3aaa47"></Button>
+                </Layout>
+            }
+        </React.Fragment>
     )
 }
 const Layout = styled.div`
@@ -31,13 +48,6 @@ const Layout = styled.div`
 
 //maxpoints name, path headerImageurl databasename
 
-
-const TitleTextBox = styled(TextBox)`
- width: calc(100vw-6rem);
- height: 2rem;
-align-content: center; 
-margin: 1rem 3rem;
-`;
 
 TheoryPageEditor.propTypes = {
 

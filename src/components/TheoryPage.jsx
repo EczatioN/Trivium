@@ -8,7 +8,7 @@ import MaterialIcon from '@material/react-material-icon'
 
 
 
-function TheoryPage({ subject, headerImage, subTitle, text, assignments }) {
+function TheoryPage({ subject,headerImage, subTitle, text, assignments}) {
   const tex = `f(x) = x^2`
   return (
     <Layout>
@@ -21,10 +21,10 @@ function TheoryPage({ subject, headerImage, subTitle, text, assignments }) {
           <MathJax.Node formula={tex} />
         </TheoryText>
         <TheoryButton //Properties: backgroundColor, backgroundColorAfter icon, text
-          backgroundColor="#43b950"
-          backgroundColorAfter="#3aaa47"
-          icon="play_arrow"
-          text="Gör Uppgifter"
+          backgroundColor = "#43b950"
+          backgroundColorAfter = "#3aaa47"
+          icon ="play_arrow"
+          text = "Gör Uppgifter"
         />
       </MathJax.Provider>
     </Layout>

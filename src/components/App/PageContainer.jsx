@@ -22,11 +22,15 @@ function PageContainer(props) {
       />
       <Route
         path={ROUTES.ACCOUNT}
-        render={(props) => <TheoryPageEditor/>}
+        render={(props) =>"konto"}
       />
       <Route
         path={ROUTES.AREAS}
         render={(props) => <TheoryPage {...props} headerImage={multiplicationImage} subject="Multiplikation" />}
+      />
+      <Route
+        path={ROUTES.ADMIN_AREAS}
+        render={(props) => <TheoryPageEditor {...props}/>}
       />
     </Layout>
   )
