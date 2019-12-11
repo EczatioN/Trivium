@@ -5,10 +5,10 @@ import MathJax from 'react-mathjax';
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 import JsxParser from 'react-jsx-parser';
 
-import Title from '../core/Title';
-import Button from '../core/Button';
-import { FirebaseContext } from '../Firebase';
-import LoadingCircle from '../core/LoadingCircle';
+import Title from './core/Title';
+import Button from './core/Button';
+import { FirebaseContext } from './Firebase'
+import LoadingCircle from './core/LoadingCircle';
 
 function TheoryPage({ match }) {
   const firebase = useContext(FirebaseContext);
