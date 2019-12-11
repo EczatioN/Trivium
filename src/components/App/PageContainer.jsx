@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 import * as ROUTES from '../../constants/routes';
 import TheoryPage from '../TheoryPage';
@@ -12,6 +12,10 @@ import AreasPage from '../AreasPage/AreasPage';
 function PageContainer(props) {
   return (
     <Layout>
+      <Route
+        exact path="/"
+        render={(props) => <Redirect {...props} to={ROUTES.HOME} />}
+      />
       <Route
         path={ROUTES.SCOREBOARD}
         render={(props) => "Scoreboard"}
