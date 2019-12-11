@@ -6,6 +6,7 @@ import { Route } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 import TheoryPage from '../TheoryPage/TheoryPage';
 import multiplicationImage from '../../media/multiplication.jpg'
+import AreasPage from '../AreasPage/AreasPage';
 
 function PageContainer(props) {
   return (
@@ -16,11 +17,15 @@ function PageContainer(props) {
       />
       <Route
         path={ROUTES.HOME}
-        render={(props) => <TheoryPage {...props} headerImage={multiplicationImage} subject="Multiplikation" />}
+        render={(props) => <AreasPage {...props} />}
       />
       <Route
         path={ROUTES.ACCOUNT}
         render={(props) => "Account"}
+      />
+      <Route
+        path={ROUTES.AREAS}
+        render={(props) => <TheoryPage {...props} headerImage={multiplicationImage} subject="Multiplikation" />}
       />
     </Layout>
   )

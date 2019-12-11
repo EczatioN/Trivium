@@ -19,7 +19,7 @@ function TheoryPage({ subject, text, assignments, headerImage }) {
           <p>Andragradsfunktioner allas även för grad 2 polynomer. Exempel: </p>
           <MathJax.Node formula={tex} />
         </TheoryText>
-        <StyledButton backgroundColor = "red" icon ="accessible_forward"></StyledButton>
+        <StyledButton backgroundColor="red" icon="accessible_forward"></StyledButton>
       </MathJax.Provider>
     </Layout>
   )
