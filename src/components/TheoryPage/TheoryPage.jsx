@@ -4,10 +4,11 @@ import styled from 'styled-components'
 import Title from '../core/Title'
 import MathJax from 'react-mathjax'
 import Button from '../core/Button'
-import { scryRenderedDOMComponentsWithTag } from 'react-dom/test-utils'
+import MaterialIcon from '@material/react-material-icon'
 
 
-function TheoryPage({ subject, text, assignments, headerImage }) {
+
+function TheoryPage({ subject, headerImage, subTitle, text, assignments }) {
   const tex = `f(x) = x^2`
   return (
     <Layout>
@@ -15,11 +16,16 @@ function TheoryPage({ subject, text, assignments, headerImage }) {
       <HeaderImage src={headerImage} alt={subject} ></HeaderImage>
       <MathJax.Provider>
         <TheoryText>
-          <h2>Andragradsfunktioner</h2>
+          <h2>{subTitle}</h2>
           <p>Andragradsfunktioner allas även för grad 2 polynomer. Exempel: </p>
           <MathJax.Node formula={tex} />
         </TheoryText>
-        <StyledButton backgroundColor="red" icon="accessible_forward"></StyledButton>
+        <TheoryButton //Properties: backgroundColor, backgroundColorAfter icon, text
+          backgroundColor="#43b950"
+          backgroundColorAfter="#3aaa47"
+          icon="play_arrow"
+          text="Gör Uppgifter"
+        />
       </MathJax.Provider>
     </Layout>
   )
@@ -29,6 +35,17 @@ const Layout = styled.div`
     display:flex;
     flex-direction: column;
     
+`;
+
+const TheoryButton = styled(Button)`
+display:flex;
+align-items:center;
+text-align: center;
+margin: auto;
+height: 4rem;
+padding: 0.25rem 1rem;
+font-size:1.5rem;
+color:#f3f9fe;
 `;
 
 const HeaderImage = styled.img`
@@ -61,16 +78,13 @@ const TheoryText = styled.div`
     }
 `;
 
-const StyledButton = styled(Button)`
-  text-align: center;
-  width: 10px;
-`;
 
 TheoryPage.propTypes = {
   subject: PropTypes.string,
+  subTitle: PropTypes.string,
   text: PropTypes.string,
   assignments: PropTypes.string,
-  headerImage: PropTypes.string
+  headerImage: PropTypes.string,
 }
 
 export default TheoryPage
