@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import { Route, Redirect } from 'react-router-dom';
 
 import * as ROUTES from '../../constants/routes';
-import TheoryPage from '../TheoryPage/TheoryPage';
-import multiplicationImage from '../../media/multiplication.jpg';
+import TheoryPage from '../TheoryPage';
+import TheoryPageEditor from '../admin/TheoryPageEditor'
+import multiplicationImage from '../../media/multiplication.jpg'
 import AreasPage from '../AreasPage/AreasPage';
 
 function PageContainer(props) {
@@ -25,7 +26,7 @@ function PageContainer(props) {
       />
       <Route
         path={ROUTES.ACCOUNT}
-        render={(props) => "Account"}
+        render={(props) => <TheoryPageEditor />}
       />
       <Route
         path={ROUTES.AREAS}
