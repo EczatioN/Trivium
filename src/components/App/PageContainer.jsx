@@ -7,6 +7,7 @@ import * as ROUTES from '../../constants/routes';
 import TheoryPage from '../TheoryPage';
 import TheoryPageEditor from '../admin/TheoryPageEditor'
 import multiplicationImage from '../../media/multiplication.jpg'
+import AreasPage from '../AreasPage/AreasPage';
 
 function PageContainer(props) {
   return (
@@ -17,11 +18,15 @@ function PageContainer(props) {
       />
       <Route
         path={ROUTES.HOME}
-        render={(props) => <TheoryPage {...props} headerImage={multiplicationImage} subject="Multiplikation" />}
+        render={(props) => <AreasPage {...props} />}
       />
       <Route
         path={ROUTES.ACCOUNT}
         render={(props) => <TheoryPageEditor/>}
+      />
+      <Route
+        path={ROUTES.AREAS}
+        render={(props) => <TheoryPage {...props} headerImage={multiplicationImage} subject="Multiplikation" />}
       />
     </Layout>
   )
