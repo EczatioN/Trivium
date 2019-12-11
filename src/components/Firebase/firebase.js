@@ -18,7 +18,7 @@ class Firebase {
     app.initializeApp(config);
 
     this.auth = app.auth();
-    this.firestore = app.firestore();
+    this.db = app.firestore();
 
     console.log("Firebase app initialized!");
   }

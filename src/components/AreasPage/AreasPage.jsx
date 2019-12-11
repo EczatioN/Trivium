@@ -11,7 +11,7 @@ import Area from './Area';
 function AreasPage(props) {
   const firebase = useContext(FirebaseContext);
   const [value, loading, error] = useCollectionOnce(
-    firebase.firestore.collection("excercises")
+    firebase.db.collection("excercises")
   );
 
   return (
@@ -28,6 +28,7 @@ function AreasPage(props) {
           {value.docs.map(doc => (
             <Area
               key={doc.id}
+              docName={doc.id}
               data={doc.data()}
             />
           ))}

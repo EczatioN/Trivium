@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
-function Area({ data, history }) {
+function Area({ data, docName, history }) {
   console.log(data);
 
   function navigateToTheory() {
-    history.push(`omraden/${data.path}`);
+    history.push(`omraden/${docName}`);
   }
 
   return (

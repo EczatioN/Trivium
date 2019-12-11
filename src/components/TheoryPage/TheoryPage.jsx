@@ -1,33 +1,51 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import Title from '../core/Title'
-import MathJax from 'react-mathjax'
-import Button from '../core/Button'
-import MaterialIcon from '@material/react-material-icon'
+import React, { useContext } from 'react'
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import MathJax from 'react-mathjax';
+import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
+import JsxParser from 'react-jsx-parser';
 
+import Title from '../core/Title';
+import Button from '../core/Button';
+import { FirebaseContext } from '../Firebase';
+import LoadingCircle from '../core/LoadingCircle';
 
-
-function TheoryPage({ subject, headerImage, subTitle, text, assignments }) {
-  const tex = `f(x) = x^2`
+function TheoryPage({ match }) {
+  const firebase = useContext(FirebaseContext);
+  const [excercise, loading, error] = useDocumentDataOnce(
+    firebase.db.doc(`excercises/${match.params.area}`)
+  );
+  if (excercise) {
+    console.log(excercise.theory);
+  }
   return (
-    <Layout>
-      <Title>{subject}</Title>
-      <HeaderImage src={headerImage} alt={subject} ></HeaderImage>
-      <MathJax.Provider>
-        <TheoryText>
-          <h2>{subTitle}</h2>
-          <p>Andragradsfunktioner allas även för grad 2 polynomer. Exempel: </p>
-          <MathJax.Node formula={tex} />
-        </TheoryText>
-        <TheoryButton //Properties: backgroundColor, backgroundColorAfter icon, text
-          backgroundColor="#43b950"
-          backgroundColorAfter="#3aaa47"
-          icon="play_arrow"
-          text="Gör Uppgifter"
-        />
-      </MathJax.Provider>
-    </Layout>
+    <React.Fragment>
+      {error &&
+        `Error: ${error}`
+      }
+      {loading &&
+        <LoadingCircle />
+      }
+      {excercise &&
+        <Layout>
+          <Title>{excercise.name}</Title>
+          <HeaderImage src={excercise.headerImageUrl} alt={excercise.name} ></HeaderImage>
+          <MathJax.Provider>
+            <TheoryText>
+              <JsxParser
+                jsx={excercise.theory}
+              />
+            </TheoryText>
+            <TheoryButton //Properties: backgroundColor, backgroundColorAfter icon, text
+              backgroundColor="#43b950"
+              backgroundColorAfter="#3aaa47"
+              icon="play_arrow"
+              text="Gör Uppgifter"
+            />
+          </MathJax.Provider>
+        </Layout>
+      }
+    </React.Fragment>
   )
 }
 
@@ -80,11 +98,7 @@ const TheoryText = styled.div`
 
 
 TheoryPage.propTypes = {
-  subject: PropTypes.string,
-  subTitle: PropTypes.string,
-  text: PropTypes.string,
-  assignments: PropTypes.string,
-  headerImage: PropTypes.string,
+
 }
 
 export default TheoryPage
