@@ -23,6 +23,14 @@ function Button({icon, text, backgroundColor, backgroundColorAfter, className}) 
 const Layout = styled.div`
 background: ${props => props.backgroundColor};
 border-radius: 0.5rem;
+display:flex;
+align-items:center;
+text-align: center;
+margin: auto;
+height: 4rem;
+padding: 0.25rem 1rem;
+font-size:1.5rem;
+color:#f3f9fe;
 transition: all 0.05s ease-in-out;
 box-shadow: 5px 5px 6px 1px rgba(0, 0, 0, .4);
 &:active {

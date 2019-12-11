@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import Title from '../core/Title'
+import Title from './core/Title'
 import MathJax from 'react-mathjax'
-import Button from '../core/Button'
+import Button from './core/Button'
 import MaterialIcon from '@material/react-material-icon'
 
 
@@ -38,14 +38,6 @@ const Layout = styled.div`
 `;
 
 const TheoryButton = styled(Button)`
-display:flex;
-align-items:center;
-text-align: center;
-margin: auto;
-height: 4rem;
-padding: 0.25rem 1rem;
-font-size:1.5rem;
-color:#f3f9fe;
 `;
 
 const HeaderImage = styled.img`
