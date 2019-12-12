@@ -10,8 +10,14 @@ import SignInPage from '../SignInPage/SignInPage';
 import LoadingCircle from '../core/LoadingCircle';
 
 function App() {
-  const firebaseContext = useContext(FirebaseContext);
-  const [user, loading, error] = useAuthState(firebaseContext.auth);
+  const firebase = useContext(FirebaseContext);
+  const [user, loading, error] = useAuthState(firebase.auth);
+
+  if (user) {
+    firebase.db.collection("users").doc(user.uid).set({
+      email: user.email
+    });
+  }
 
   return (
     <Layout>
