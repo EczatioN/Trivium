@@ -8,6 +8,7 @@ import TheoryPage from '../TheoryPage';
 import TheoryPageEditor from '../admin/TheoryPageEditor'
 import multiplicationImage from '../../media/multiplication.jpg'
 import AreasPage from '../AreasPage/AreasPage';
+import AssignmentEditor from '../admin/AssignmentEditor';
 import AssignmentPage from '../ExcercisePage/AssignmentPage';
 
 function PageContainer(props) {
@@ -41,6 +42,14 @@ function PageContainer(props) {
       <Route
         path={ROUTES.EXCERCISES}
         render={(props) => <AssignmentPage {...props} />}
+      />
+      <Route
+        exact path={ROUTES.ADMIN_AREAS}
+        render={(props) => <TheoryPageEditor {...props} />}
+      />
+      <Route
+        exact path={ROUTES.ADMIN_ASSIGNMENTS}
+        render={(props) => <AssignmentEditor {...props} />}
       />
     </Layout>
   )
