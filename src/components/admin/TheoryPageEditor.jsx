@@ -6,8 +6,9 @@ import Title from '../core/Title';
 import { FirebaseContext } from '../Firebase';
 import LoadingCircle from '../core/LoadingCircle';
 import TextBox from '../admin/TextBox';
+import {withRouter} from 'react-router-dom';
 
-function TheoryPageEditor({ match }) {
+function TheoryPageEditor({ match, history}) {
     const firebase = useContext(FirebaseContext)
     useEffect(() => {
         firebase.db.collection('excercises').doc(match.params.area)
@@ -22,7 +23,13 @@ function TheoryPageEditor({ match }) {
         });
 
     }, [match, firebase])
- 
+    const [assignments,setAssignments] = useState();
+    useEffect(() => {
+        firebase.db.collection(`excercises/${match.params.area}/assignments`)
+        .onSnapshot(function(docs){
+            setAssignments(docs);
+        })
+    }, [match, firebase])
 
     const [excerciseName,setExcerciseName] = useState();
     const [excerciseTheory,setExcerciseTheory] = useState();
@@ -35,23 +42,22 @@ function TheoryPageEditor({ match }) {
     const [newHeaderImageUrl,setNewHeaderImageUrl] = useState();
     const [newMaxPoints,setNewMaxPoints] = useState();
     const [newDBname,setNewDBname] = useState();
-    function updateName(text){
-        setExcerciseName(text);
 
-    }
 
     function saveData() {
-        console.log("saving")
-        firebase.db.collection("excercises").doc(match.params.area).set({
-            name: {newName},
-            theory: {newTheory},
-            headerImageUrl: {newHeaderImageUrl},
-            maxPoints:{newMaxPoints},
-            id: {newDBname},
-
-        });
+        console.log("saving");
+        var doc = {};
+        doc.name = newName ? newName : excerciseName;
+        doc.theory = newTheory ? newTheory: excerciseTheory;
+        doc.headerImageUrl = newHeaderImageUrl ? newHeaderImageUrl: excerciseHeaderImageUrl;
+        doc.maxPoints = newMaxPoints ? newMaxPoints: excerciseMaxPoints;
+        doc.id = newDBname ? newDBname: excerciseDBname;
+        firebase.db.collection("excercises").doc(match.params.area).set(doc);
     }
-    
+
+    function navigateToAssignment(id) {
+        history.push(`${match.params.area}/uppgifter/${id}`)
+    }
     return (
         <React.Fragment>
             {
@@ -71,16 +77,50 @@ function TheoryPageEditor({ match }) {
                     <TextBox defaultValue={excerciseMaxPoints} onChange={setNewMaxPoints} />
                     <Title>Ändra databasnamn</Title>
                     <TextBox defaultValue={excerciseDBname} onChange={setNewDBname}/>
-                    <Button icon="save" backgroundColor="#43b950" backgroundColorAfter="#3aaa47" onClick={saveData}></Button>
+                    <ButtonDiv>
+                    <Button icon="save" backgroundColor="#43b950" backgroundColorAfter="#3aaa47" text="Spara" onClick={saveData}></Button>
+                    <Button icon="add" backgroundColor ="#43b950" text="Lägg till Uppgift"></Button>
+                    </ButtonDiv>
+                    {assignments &&
+                        <StyledOl>
+                        {assignments.docs.map(doc => (
+                            <StyledLi onClick= {()=> navigateToAssignment(doc.id)}
+                                key={doc.id}>
+                                {doc.id}
+                            </StyledLi>
+                        ))}
+                    </StyledOl>
+                    }
+
                 </Layout>
             }
         </React.Fragment>
     )
 }
 
+const StyledOl = styled.ol `
+list-style: none;
+padding: 0;
+`;
+
+const StyledLi = styled.li `
+    height: 5rem;
+    background: gray;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 2rem;
+    border-radius: 2rem;
+`;
+
+const ButtonDiv = styled.div `
+    display:flex;
+    flex-direction: row;
+`;
+
 const Layout = styled.div`
  display:flex;
  flex-direction: column;
+ margin: 0 30rem;
 `
 
 //maxpoints name, path headerImageurl databasename
@@ -90,5 +130,5 @@ TheoryPageEditor.propTypes = {
 
 }
 
-export default TheoryPageEditor
+export default withRouter(TheoryPageEditor)
 
