@@ -10,6 +10,7 @@ import multiplicationImage from '../../media/multiplication.jpg'
 import AreasPage from '../AreasPage/AreasPage';
 import ResultsPage from '../ResultsPage/ResultsPage';
 import AssignmentEditor from '../admin/AssignmentEditor';
+import AssignmentPage from '../ExcercisePage/AssignmentPage';
 
 function PageContainer(props) {
   return (
@@ -28,15 +29,23 @@ function PageContainer(props) {
       />
       <Route
         path={ROUTES.ACCOUNT}
-        render={(props) =>"konto"}
+        render={(props) => "konto"}
       />
       <Route
         exact path={ROUTES.AREAS}
         render={(props) => <TheoryPage {...props} headerImage={multiplicationImage} subject="Multiplikation" />}
       />
       <Route
+        path={ROUTES.ADMIN_AREAS}
+        render={(props) => <TheoryPageEditor {...props} />}
+      />
+      <Route
+        path={ROUTES.EXCERCISES}
+        render={(props) => <AssignmentPage {...props} />}
+      />
+      <Route
         exact path={ROUTES.ADMIN_AREAS}
-        render={(props) => <TheoryPageEditor {...props}/>}
+        render={(props) => <TheoryPageEditor {...props} />}
       />
       <Route
       exact path={ROUTES.RESULTS}
@@ -45,7 +54,7 @@ function PageContainer(props) {
 
       </Route>
         exact path={ROUTES.ADMIN_ASSIGNMENTS}
-        render={(props) => <AssignmentEditor {...props}/>}
+        render={(props) => <AssignmentEditor {...props} />}
       />
     </Layout>
   )

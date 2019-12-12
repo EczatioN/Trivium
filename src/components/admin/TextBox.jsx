@@ -1,17 +1,17 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 
-function TextBox({onChange,defaultValue}) {
-   const [text, setText] = useState(defaultValue);
+function TextBox({ onChange, defaultValue }) {
+    const [text, setText] = useState(defaultValue);
     function onTextChange(event) {
         onChange(event.target.value);
         setText(event.target.value);
     }
     return (
         <Layout>
-             <StyledTextArea value={text} onChange={onTextChange}>
+            <StyledTextArea value={text} onChange={onTextChange}>
             </StyledTextArea>
         </Layout>
     )

@@ -45,7 +45,7 @@ const Layout = styled.div`
 
 const StyledMaterialIcon = styled(MaterialIcon)`
   font-size: 4rem;
-  color:${props => props.iconColor ? props.iconcolor : "#f3f9fe"};
+  color:${props => props.iconcolor ? props.iconcolor : "#f3f9fe"};
   user-select: none;
 `;
 

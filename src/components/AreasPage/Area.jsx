@@ -22,7 +22,7 @@ Area.propTypes = {
   data: PropTypes.object
 }
 
-const StyledListItem = styled.li`
+const StyledListItem = styled.div`
   display: flex;
   flex-direction: column;
   width: calc(50vw - 1rem - 1rem);
@@ -42,7 +42,7 @@ const HeaderImage = styled.img`
 
 const Name = styled.h2`
   height: 4rem;
-  font-size: fit-parent;
+  font-size: 5vw; /* Scale with width */
   margin: 0.5rem;
 `;
 
