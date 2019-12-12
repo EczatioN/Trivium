@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types'
 import styled from 'styled-components';
 
-function TextInput(props) {
-
-  const [text, setText] = useState();
+function TextInput({ defaultText, onChange }) {
+  const [text, setText] = useState(defaultText);
 
   function updateText(event) {
     setText(event.target.value);
+    if (onChange) onChange(event.target.value);
   }
 
   return (
@@ -21,7 +22,8 @@ function TextInput(props) {
 }
 
 TextInput.propTypes = {
-
+  defaultText: PropTypes.string,
+  onChange: PropTypes.func,
 }
 
 const StyledInput = styled.input`

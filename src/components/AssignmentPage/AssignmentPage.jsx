@@ -1,13 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
+
 import Assignment from './Assignment';
 import Button from '../core/Button';
+import { FirebaseContext } from '../Firebase';
 
 function AssignmentPage({ match, history }) {
+  const firebase = useContext(FirebaseContext);
   const area = match.params.area;
   const assignmentId = parseInt(match.params.id);
 
+  // Make sure a user-answers document exists for the current user.
+  firebase.db.doc(`excercises/${area}/user-answers/${firebase.auth.currentUser.uid}`).set({}, { merge: true });
 
   function navigateBack() {
     history.replace(`/omraden/${area}/uppgifter/${assignmentId - 1}`);

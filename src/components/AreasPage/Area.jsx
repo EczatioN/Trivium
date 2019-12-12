@@ -4,8 +4,6 @@ import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
 function Area({ data, docName, history }) {
-  console.log(data);
-
   function navigateToTheory() {
     history.push(`omraden/${docName}`);
   }

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components';
-import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
+import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { withRouter } from 'react-router-dom';
 
 import Title from './core/Title';
@@ -11,12 +11,11 @@ import JsxRenderer from './core/JsxRenderer';
 
 function TheoryPage({ match, history }) {
   const firebase = useContext(FirebaseContext);
-  const [excercise, loading, error] = useDocumentDataOnce(
+  const [excercise, loading, error] = useDocumentData(
     firebase.db.doc(`excercises/${match.params.area}`)
   );
 
   function navigateToExcercises() {
-    console.log("1");
     history.push(`/omraden/${match.params.area}/uppgifter/0`);
   }
 

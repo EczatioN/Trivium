@@ -18,7 +18,6 @@ function TheoryPageEditor({ match, history }) {
                 setExcerciseHeaderImageUrl(area.headerImageUrl);
                 setExcerciseMaxPoints(area.maxPoints);
                 setExcerciseDBname(area.id);
-                console.log(area);
             });
 
     }, [match, firebase])
@@ -44,7 +43,6 @@ function TheoryPageEditor({ match, history }) {
 
 
     function saveData() {
-        console.log("saving");
         var doc = {};
         doc.name = newName ? newName : excerciseName;
         doc.theory = newTheory ? newTheory : excerciseTheory;
