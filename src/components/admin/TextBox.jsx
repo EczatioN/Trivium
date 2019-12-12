@@ -2,14 +2,16 @@ import React,{useState} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-function TextBox({defaultText}) {
-    const [textContent,setTextContent] = useState(defaultText);
+
+function TextBox({onChange,defaultValue}) {
+   const [text, setText] = useState(defaultValue);
     function onTextChange(event) {
-        setTextContent(event.target.value);
+        onChange(event.target.value);
+        setText(event.target.value);
     }
     return (
         <Layout>
-             <StyledTextArea value={textContent} onChange={onTextChange}>
+             <StyledTextArea value={text} onChange={onTextChange}>
             </StyledTextArea>
         </Layout>
     )
@@ -27,7 +29,8 @@ idth: calc(100vw-6rem);
 margin: 1rem 3rem;
 `;
 TextBox.propTypes = {
-    defaultText: PropTypes.string,
+    onChange: PropTypes.func,
+    defaultValue: PropTypes.any,
 }
 
 export default TextBox

@@ -9,6 +9,7 @@ import TheoryPageEditor from '../admin/TheoryPageEditor'
 import multiplicationImage from '../../media/multiplication.jpg'
 import AreasPage from '../AreasPage/AreasPage';
 import ResultsPage from '../ResultsPage/ResultsPage';
+import AssignmentEditor from '../admin/AssignmentEditor';
 
 function PageContainer(props) {
   return (
@@ -34,7 +35,7 @@ function PageContainer(props) {
         render={(props) => <TheoryPage {...props} headerImage={multiplicationImage} subject="Multiplikation" />}
       />
       <Route
-        path={ROUTES.ADMIN_AREAS}
+        exact path={ROUTES.ADMIN_AREAS}
         render={(props) => <TheoryPageEditor {...props}/>}
       />
       <Route
@@ -43,6 +44,9 @@ function PageContainer(props) {
        >
 
       </Route>
+        exact path={ROUTES.ADMIN_ASSIGNMENTS}
+        render={(props) => <AssignmentEditor {...props}/>}
+      />
     </Layout>
   )
 }
