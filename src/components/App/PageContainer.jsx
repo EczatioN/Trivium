@@ -8,6 +8,7 @@ import TheoryPage from '../TheoryPage';
 import TheoryPageEditor from '../admin/TheoryPageEditor'
 import multiplicationImage from '../../media/multiplication.jpg'
 import AreasPage from '../AreasPage/AreasPage';
+import ResultsPage from '../ResultsPage/ResultsPage';
 
 function PageContainer(props) {
   return (
@@ -29,13 +30,19 @@ function PageContainer(props) {
         render={(props) =>"konto"}
       />
       <Route
-        path={ROUTES.AREAS}
+        exact path={ROUTES.AREAS}
         render={(props) => <TheoryPage {...props} headerImage={multiplicationImage} subject="Multiplikation" />}
       />
       <Route
         path={ROUTES.ADMIN_AREAS}
         render={(props) => <TheoryPageEditor {...props}/>}
       />
+      <Route
+      exact path={ROUTES.RESULTS}
+      render={(props) => <ResultsPage {...props}/>}
+       >
+
+      </Route>
     </Layout>
   )
 }
