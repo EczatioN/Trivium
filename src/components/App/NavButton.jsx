@@ -19,8 +19,12 @@ NavButton.propTypes = {
 const StyledLink = styled(Link)`
   display: flex;
   flex-grow: 1;
-  background: #004A97;
+  background-color: #008f65;
   border: none;
+  &:active {
+    background-color: #007f56 !important;
+  }
+
 `;
 
 export default NavButton
