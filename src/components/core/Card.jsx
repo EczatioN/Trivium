@@ -1,14 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components';
 
-function Card({ children , className}) {
+function Card({ children, className }) {
   return (
-    
-    <StyledDiv className = {className}>
+    <StyledDiv className={className}>
       {
         children
-        
       }
     </StyledDiv>
   )

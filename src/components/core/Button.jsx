@@ -3,10 +3,20 @@ import PropTypes from 'prop-types'
 import MaterialIcon from "@material/react-material-icon"
 import styled from "styled-components"
 
-function Button({ icon, text, backgroundColor, backgroundColorAfter, className, onClick, iconColor }) {
+function Button({
+  icon,
+  text,
+  backgroundColor,
+  backgroundColorAfter,
+  className,
+  onClick,
+  iconColor,
+  disabled
+}) {
   return (
     <Layout
-      onClick={onClick}
+      disabled={disabled}
+      onClick={disabled ? undefined : onClick}
       className={className}
       backgroundColor={backgroundColor}
       backgroundColorAfter={backgroundColorAfter}
@@ -22,21 +32,22 @@ function Button({ icon, text, backgroundColor, backgroundColorAfter, className, 
 
 const Layout = styled.div`
   background: ${props => props.backgroundColor};
+  opacity: ${props => props.disabled ? 0.5 : 1};
   border-radius: 0.5rem;
   display:flex;
   align-items:center;
   text-align: center;
   margin: auto;
-  height: 4rem;
+  height: 3rem;
   padding: 0.25rem 1rem;
   font-size:1.5rem;
   color:#f3f9fe;
   transition: all 0.05s ease-in-out;
   box-shadow: 5px 5px 6px 1px rgba(0, 0, 0, .4);
   &:active {
-    box-shadow 6px 6px 6px 4px rgba(0, 0, 0, .4);
-    transform: scale(1.025);
-    background: ${props => props.backgroundColorAfter};
+    box-shadow: ${props => props.disabled ? "0" : "6px 6px 6px 4px rgba(0, 0, 0, .4)"};
+    transform: ${props => props.disabled ? "scale(1)" : "scale(1.025)"};
+    background: ${props => props.disabled ? props.backgroundColor : props.backgroundColorAfter};
   }
   span {
     user-select:none;
@@ -55,7 +66,7 @@ Button.propTypes = {
   backgroundColor: PropTypes.string,
   className: PropTypes.any,
   iconColor: PropTypes.string,
-
+  disabled: PropTypes.bool,
 }
 
 export default Button

@@ -1,10 +1,6 @@
-import React, { useContext } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
-import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
-import { FirebaseContext } from '../Firebase';
-import LoadingCircle from '../core/LoadingCircle';
 import Assignment from './Assignment';
 import Button from '../core/Button';
 
@@ -12,10 +8,6 @@ function AssignmentPage({ match, history }) {
   const area = match.params.area;
   const assignmentId = parseInt(match.params.id);
 
-  const firebase = useContext(FirebaseContext);
-  const [assignment, loading, error] = useDocumentDataOnce(
-    firebase.db.doc(`excercises/${area}/assignments/${assignmentId}`)
-  );
 
   function navigateBack() {
     history.replace(`/omraden/${area}/uppgifter/${assignmentId - 1}`);
@@ -26,29 +18,21 @@ function AssignmentPage({ match, history }) {
 
   return (
     <Layout>
-      {error &&
-        `Error: ${error}`
-      }
-      {loading &&
-        <LoadingCircle />
-      }
-      {assignment &&
-        <Assignment
-          assignment={assignment}
-          id={parseInt(assignmentId)}
-          area={area}
-        />
-      }
+      <Assignment
+        id={parseInt(assignmentId)}
+        area={area}
+      />
+      <Grower />
       <NavContainer>
-        {(assignmentId > 0) &&
-          <Button
-            backgroundColor="lightblue"
-            iconColor="black"
-            icon="keyboard_arrow_left"
-            onClick={navigateBack}
-          />
-        }
         <Button
+          disabled={assignmentId <= 0}
+          backgroundColor="lightblue"
+          iconColor="black"
+          icon="keyboard_arrow_left"
+          onClick={navigateBack}
+        />
+        <Button
+          assignmentid={assignmentId}
           backgroundColor="lightblue"
           iconColor="black"
           icon="keyboard_arrow_right"
@@ -66,11 +50,15 @@ AssignmentPage.propTypes = {
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
 `;
-
+const Grower = styled.div`
+  flex-grow: 1;
+`;
 const NavContainer = styled.nav`
   display: flex;
   flex-direction: row;
+  margin-bottom: 2rem;
 `;
 
 export default withRouter(AssignmentPage)

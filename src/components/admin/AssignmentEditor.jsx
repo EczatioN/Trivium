@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import styled from 'styled-components'
+
 import { FirebaseContext } from '../Firebase'
 import Title from '../core/Title'
-import styled from 'styled-components'
-import Textbox from '../admin/TextBox'
+import Textbox from './TextBox'
 import Button from '../core/Button';
 import LoadingCircle from '../core/LoadingCircle';
 

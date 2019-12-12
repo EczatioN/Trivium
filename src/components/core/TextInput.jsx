@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 function TextInput(props) {
@@ -30,6 +29,9 @@ const StyledInput = styled.input`
   margin: 1rem;
   padding: 0.5rem;
   border-radius: 0.5rem;
+  border-width: 0.05125rem;
+  border-style: solid;
+  border-color: gray;
 
   &:focus {
     outline: none;

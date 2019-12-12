@@ -1,16 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components';
 import { Route, Redirect } from 'react-router-dom';
 
 import * as ROUTES from '../../constants/routes';
 import TheoryPage from '../TheoryPage';
-import TheoryPageEditor from '../admin/TheoryPageEditor'
-import multiplicationImage from '../../media/multiplication.jpg'
+import TheoryPageEditor from '../Admin/TheoryPageEditor'
 import AreasPage from '../AreasPage/AreasPage';
 import ResultsPage from '../ResultsPage/ResultsPage';
-import AssignmentEditor from '../admin/AssignmentEditor';
-import AssignmentPage from '../ExcercisePage/AssignmentPage';
+import AssignmentEditor from '../Admin/AssignmentEditor';
+import AssignmentPage from '../AssignmentPage/AssignmentPage';
 
 function PageContainer(props) {
   return (
@@ -33,26 +31,23 @@ function PageContainer(props) {
       />
       <Route
         exact path={ROUTES.AREAS}
-        render={(props) => <TheoryPage {...props} headerImage={multiplicationImage} subject="Multiplikation" />}
-      />
-      <Route
-        path={ROUTES.ADMIN_AREAS}
-        render={(props) => <TheoryPageEditor {...props} />}
+        render={(props) => <TheoryPage {...props} />}
       />
       <Route
         path={ROUTES.EXCERCISES}
         render={(props) => <AssignmentPage {...props} />}
       />
       <Route
+        exact path={ROUTES.RESULTS}
+        render={(props) => <ResultsPage {...props} />}
+      />
+
+      {/* Admin */}
+      <Route
         exact path={ROUTES.ADMIN_AREAS}
         render={(props) => <TheoryPageEditor {...props} />}
       />
       <Route
-      exact path={ROUTES.RESULTS}
-      render={(props) => <ResultsPage {...props}/>}
-       >
-
-      </Route>
         exact path={ROUTES.ADMIN_ASSIGNMENTS}
         render={(props) => <AssignmentEditor {...props} />}
       />

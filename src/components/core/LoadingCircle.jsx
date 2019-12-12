@@ -1,8 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components';
 
-function LoadingCircle({ color }) {
+function LoadingCircle(props) {
 
   return (
     <Container>
@@ -21,16 +20,14 @@ function LoadingCircle({ color }) {
 }
 
 LoadingCircle.propTypes = {
-  color: PropTypes.string
+
 }
 
 const Container = styled.div`
-  position: absolute;
+  position: relative;
   height: 100px;
   width: 100px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
+  margin: auto;
 `;
 
 const Circular = styled.svg`
