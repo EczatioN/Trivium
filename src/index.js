@@ -9,7 +9,7 @@ WebFont.load(
     {
         google:
         {
-            families:["Nunito","Material Icons"]
+            families: ["Nunito", "Material Icons"]
         }
     });
 

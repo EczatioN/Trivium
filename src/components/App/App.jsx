@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { BrowserRouter as Router } from 'react-router-dom';
+import Div100vh from 'react-div-100vh';
 
 import PageContainer from './PageContainer';
 import Navbar from './Navbar';
@@ -42,7 +43,7 @@ function App() {
   );
 }
 
-const Layout = styled.div`
+const Layout = styled(Div100vh)`
   display: flex;
   flex-direction: column;
   font-family: Nunito;
