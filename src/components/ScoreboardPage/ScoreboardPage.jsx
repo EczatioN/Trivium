@@ -46,13 +46,17 @@ function ScoreboardPage({ history, match }) {
               const doc = await firebase.db.doc(`users/${user}`).get();
               console.log(doc);
               console.log(Object.getOwnPropertyDescriptor(userScores, user));
-              if (Object.getOwnPropertyDescriptor(userScores, user)) {
-                Object.defineProperty(
-                  userScores,
-                  doc.data().name,
-                  Object.getOwnPropertyDescriptor(userScores, user)
-                );
-                delete userScores[user];
+              if (doc) {
+                if (doc.data()) {
+                  if (Object.getOwnPropertyDescriptor(userScores, user)) {
+                    Object.defineProperty(
+                      userScores,
+                      doc.data().name,
+                      Object.getOwnPropertyDescriptor(userScores, user)
+                    );
+                    delete userScores[user];
+                  }
+                }
               }
             }
             console.log(userScores);
