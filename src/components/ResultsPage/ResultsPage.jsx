@@ -8,65 +8,68 @@ import { withRouter } from 'react-router-dom';
 import { useCollectionOnce, useDocumentOnce } from 'react-firebase-hooks/firestore';
 import LoadingCircle from '../core/LoadingCircle';
 
-function ResultsPage({match}) {
-    const firebase = useContext(FirebaseContext);
-    const [assignments, loading, error] = useCollectionOnce(
-        firebase.db.collection(`excercises/${match.params.area}/assignments`)
-      );
-    const [userAnswers, answersLoading, answersError] = useDocumentOnce(
-        firebase.db.doc(`excercises/${match.params.area}/user-answers/${firebase.auth.currentUser.uid}`)
-      );
-    var correctAnswers = 0;
-    
-    if(assignments && userAnswers){
-        assignments.docs.forEach(assignment => {
-    
-            const answer = userAnswers.data().assignments[
-                assignment.id
-            ];
-            console.log(answer, assignment.data().answer)
-            if(assignment.data()) {
-                if(answer === assignment.data().answer){
-                    correctAnswers++;
-                };
-            }
-        });
-    }
-    
+function ResultsPage({ match }) {
+  const firebase = useContext(FirebaseContext);
+  const [assignments, loading, error] = useCollectionOnce(
+    firebase.db.collection(`excercises/${match.params.area}/assignments`)
+  );
+  const [userAnswers, answersLoading, answersError] = useDocumentOnce(
+    firebase.db.doc(`excercises/${match.params.area}/user-answers/${firebase.auth.currentUser.uid}`)
+  );
+  var correctAnswers = 0;
 
-    
-        
-    
+  if (assignments && userAnswers) {
+    assignments.docs.forEach(assignment => {
+
+      const answer = userAnswers.data().assignments[
+        assignment.id
+      ];
+      console.log(answer, assignment.data().answer)
+      if (assignment.data()) {
+        if (answer === assignment.data().answer) {
+          correctAnswers++;
+        };
+      }
+    });
+  }
+
+
+
+
+
   return (
     <React.Fragment>
       {error &&
         `Error: ${error}`
       }
-      {loading &&
+      {answersError &&
+        `Error: ${answersError}`
+      }
+      {(loading || answersLoading) &&
         <LoadingCircle />
       }
       {assignments && userAnswers &&
         <Layout>
-            <Title>Resultat</Title>
+          <Title>Resultat</Title>
 
-            <InfoCard>
-                <Procent red={(correctAnswers/assignments.docs.length)*100 <= 50} ><strong>{(correctAnswers/assignments.docs.length)*100}%</strong></Procent>
-                <Resultat>{correctAnswers}/{assignments.docs.length}</Resultat>
-            </InfoCard>
+          <InfoCard>
+            <Procent red={(correctAnswers / assignments.docs.length) * 100 <= 50} ><strong>{(correctAnswers / assignments.docs.length) * 100}%</strong></Procent>
+            <Resultat>{correctAnswers}/{assignments.docs.length}</Resultat>
+          </InfoCard>
 
-        <UppgiftLista>
-          {assignments.docs.map(assignment => (
-            <UppgiftListaItem key={assignment.id}>
-              <SimpleExpansionPanel
-                assignment={assignment.data()}
-                userAnswers={userAnswers}
-                id={assignment.id}
-              />
-            </UppgiftListaItem>
-          ))}
-        </UppgiftLista>
-      </Layout>
-       }
+          <UppgiftLista>
+            {assignments.docs.map(assignment => (
+              <UppgiftListaItem key={assignment.id}>
+                <SimpleExpansionPanel
+                  assignment={assignment.data()}
+                  userAnswers={userAnswers}
+                  id={assignment.id}
+                />
+              </UppgiftListaItem>
+            ))}
+          </UppgiftLista>
+        </Layout>
+      }
     </React.Fragment>
   )
 }

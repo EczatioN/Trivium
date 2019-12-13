@@ -18,7 +18,6 @@ function TheoryPage({ match, history }) {
   function navigateToExcercises() {
     history.push(`/omraden/${match.params.area}/uppgifter/0`);
   }
-
   return (
     <React.Fragment>
       {error &&

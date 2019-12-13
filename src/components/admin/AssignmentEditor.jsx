@@ -9,14 +9,19 @@ import Button from '../core/Button';
 import LoadingCircle from '../core/LoadingCircle';
 
 function AssignmentEditor({ match, history }) {
+    console.log("hej")
     const firebase = useContext(FirebaseContext)
     useEffect(() => {
         firebase.db.collection('excercises').doc(match.params.area).collection('assignments').doc(match.params.id)
             .onSnapshot(function (doc) {
                 const id = doc.data();
-                setQuestion(id.question);
-                setAnswer(id.answer);
-                setSolution(id.solution);
+                if (id) {
+                    console.log(id)
+                    setQuestion(id.question);
+                    setAnswer(id.answer);
+                    setSolution(id.solution);
+                }
+
             });
 
     }, [match, firebase])
@@ -39,6 +44,13 @@ function AssignmentEditor({ match, history }) {
         history.replace(`/admin/omraden/${match.params.area}`)
     }
 
+    function removeData() {
+        firebase.db.doc(`excercises/${match.params.area}/assignments/${match.params.id}`).delete()
+            .then(() => {
+                history.replace(`/admin/omraden/${match.params.area}`)
+            })
+    }
+
 
 
     return (
@@ -57,12 +69,16 @@ function AssignmentEditor({ match, history }) {
                     <Textbox defaultValue={answer} onChange={setNewAnswer}></Textbox>
                     <Title>Lösning</Title>
                     <Textbox defaultValue={solution} onChange={setNewSolution}></Textbox>
-                    <Button
-                        icon="save"
-                        backgroundColor="#43b950"
-                        backgroundColorAfter="#3aaa47"
-                        text="Spara"
-                        onClick={saveData}></Button>
+                    <ButtonDiv>
+                        <Button
+                            icon="save"
+                            backgroundColor="#43b950"
+                            backgroundColorAfter="#3aaa47"
+                            text="Spara"
+                            onClick={saveData}></Button>
+                        <Button icon="delete" backgroundColor="#e34034" text="Ta bort" onClick={removeData}></Button>
+                    </ButtonDiv>
+
 
                 </Layout>
             }
@@ -76,6 +92,11 @@ const Layout = styled.div`
 
 const Styledh2 = styled.h2`
     text-align: center;
+`;
+
+const ButtonDiv = styled.div`
+    display:flex;
+    flex-direction: row;
 `;
 
 AssignmentEditor.propTypes = {

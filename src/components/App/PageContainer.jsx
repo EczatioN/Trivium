@@ -9,6 +9,7 @@ import AreasPage from '../AreasPage/AreasPage';
 import ResultsPage from '../ResultsPage/ResultsPage';
 import AssignmentEditor from '../admin/AssignmentEditor';
 import AssignmentPage from '../AssignmentPage/AssignmentPage';
+import NewAssignment from '../admin/NewAssignment';
 import ProfilePage from '../ProfilePage';
 
 function PageContainer(props) {
@@ -51,6 +52,10 @@ function PageContainer(props) {
       <Route
         exact path={ROUTES.ADMIN_ASSIGNMENTS}
         render={(props) => <AssignmentEditor {...props} />}
+      />
+      <Route
+        exact path={ROUTES.ADMIN_CREATE_ASSIGNMENT}
+        render={(props) => <NewAssignment {...props} />}
       />
     </Layout>
   )
