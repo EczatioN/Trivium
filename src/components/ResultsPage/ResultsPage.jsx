@@ -81,7 +81,7 @@ const InfoCard = styled(Card)`
   margin: 0rem 1rem 1rem 1rem;
   border-radius: 0.3rem;
   height: fit-content;
-`
+`;
 const Resultat = styled.p`
   text-align:center;
   margin:0.5rem;
