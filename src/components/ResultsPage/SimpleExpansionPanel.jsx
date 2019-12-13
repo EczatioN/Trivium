@@ -5,8 +5,16 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import styled from 'styled-components';
+import JsxRenderer from '../core/JsxRenderer';
 
-function SimpleExpansionPanel({ result }) {
+
+function SimpleExpansionPanel({ assignment, userAnswers, id }) {
+  
+  const answer = userAnswers.data().assignments[
+        id
+  ];
+  const correct = answer === assignment.answer;
+  console.log(answer)
   return (
     <div>
       <ExpansionPanel>
@@ -15,13 +23,13 @@ function SimpleExpansionPanel({ result }) {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography>{result.question}</Typography>
+          <JsxRenderer code={assignment.question}></JsxRenderer>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <Details>
-            <StyledText>{result.question}</StyledText>
-            <StyledText>{result.answer}</StyledText>
-            <StyledText>{result.solution}</StyledText>
+            <JsxRenderer code={assignment.question}></JsxRenderer>
+            <StyledText>{assignment.answer}</StyledText>
+            <StyledText>{assignment.solution}</StyledText>
           </Details>
         </ExpansionPanelDetails>
       </ExpansionPanel>
@@ -38,6 +46,7 @@ const StyledText = styled.p`
   font-size: 1rem;
   word-wrap: break-word !important;
   overflow: hidden;
+
 `;
 const Details = styled.div`
   display: flex;

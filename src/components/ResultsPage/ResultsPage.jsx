@@ -1,46 +1,68 @@
-import React from 'react';
+import React, { useContext } from 'react'
 import styled from 'styled-components';
-
+import { FirebaseContext } from '../Firebase';
 import Title from '../core/Title';
 import Card from '../core/Card';
 import SimpleExpansionPanel from './SimpleExpansionPanel';
+import { withRouter } from 'react-router-dom';
+import { useCollectionOnce, useDocumentOnce } from 'react-firebase-hooks/firestore';
+import LoadingCircle from '../core/LoadingCircle';
 
-function ResultsPage(props) {
-  const results = [
-    {
-      id: 0,
-      question: 'Har du penis?',
-      answer: 'No',
-      solution: 'Kolla',
-    },
-    {
-      id: 1,
-      question: '',
-      answer: '',
-      solution: '',
+function ResultsPage({match}) {
+    const firebase = useContext(FirebaseContext);
+    const [assignments, loading, error] = useCollectionOnce(
+        firebase.db.collection(`excercises/${match.params.area}/assignments`)
+      );
+    const [userAnswers, answersLoading, answersError] = useDocumentOnce(
+        firebase.db.doc(`excercises/${match.params.area}/user-answers/${firebase.auth.currentUser.uid}`)
+      );
+    var correctAnswers = 0;
+    
+    if(assignments && userAnswers){
+        assignments.docs.forEach(assignment => {
+    
+            const answer = userAnswers.data().assignments[
+                assignment.id
+            ];
+            console.log(answer, assignment.data().answer)
+            if(assignment.data()) {
+                if(answer === assignment.data().answer){
+                    correctAnswers++;
+                };
+            }
+        });
     }
-  ];
-
+    
   return (
     <React.Fragment>
-      <Layout>
-        <Title>Resultat</Title>
+      {error &&
+        `Error: ${error}`
+      }
+      {loading &&
+        <LoadingCircle />
+      }
+      {assignments && userAnswers &&
+        <Layout>
+            <Title>Resultat</Title>
 
-        <InfoCard>
-          <Procent><strong>90%</strong></Procent>
-          <Resultat>9/10</Resultat>
-        </InfoCard>
+            <InfoCard>
+                <Procent><strong>{(correctAnswers/assignments.docs.length)*100}%</strong></Procent>
+                <Resultat>{correctAnswers}/{assignments.docs.length}</Resultat>
+            </InfoCard>
 
         <UppgiftLista>
-          {results.map(result => (
-            <UppgiftListaItem key={result.id}>
+          {assignments.docs.map(assignment => (
+            <UppgiftListaItem key={assignment.id}>
               <SimpleExpansionPanel
-                result={result}
+                assignment={assignment.data()}
+                userAnswers={userAnswers}
+                id={assignment.id}
               />
             </UppgiftListaItem>
           ))}
         </UppgiftLista>
       </Layout>
+       }
     </React.Fragment>
   )
 }
@@ -85,5 +107,5 @@ ResultsPage.propTypes = {
 
 }
 
-export default ResultsPage;
+export default withRouter(ResultsPage);
 
