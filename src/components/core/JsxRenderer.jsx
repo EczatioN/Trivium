@@ -42,5 +42,9 @@ const StyledText = styled.div`
   }
 `;
 
-export default JsxRenderer
+function shouldUpdate(prevProps, nextProps) {
+  return prevProps.code === nextProps.code;
+}
+
+export default React.memo(JsxRenderer, shouldUpdate)
 

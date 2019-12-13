@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 import * as ROUTES from '../../constants/routes';
 import TheoryPage from '../TheoryPage';
-import TheoryPageEditor from '../Admin/TheoryPageEditor'
+import TheoryPageEditor from '../Admin/TheoryPageEditor';
 import AreasPage from '../AreasPage/AreasPage';
 import ResultsPage from '../ResultsPage/ResultsPage';
 import AssignmentEditor from '../Admin/AssignmentEditor';

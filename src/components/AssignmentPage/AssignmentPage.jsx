@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
@@ -10,6 +10,7 @@ function AssignmentPage({ match, history }) {
   const firebase = useContext(FirebaseContext);
   const area = match.params.area;
   const assignmentId = parseInt(match.params.id);
+  const [assignmentAmount, setAssignmentAmount] = useState(0);
 
   // Make sure a user-answers document exists for the current user.
   firebase.db.doc(`excercises/${area}/user-answers/${firebase.auth.currentUser.uid}`).set({}, { merge: true });
@@ -18,8 +19,20 @@ function AssignmentPage({ match, history }) {
     history.replace(`/omraden/${area}/uppgifter/${assignmentId - 1}`);
   }
   function navigateForward() {
-    history.replace(`/omraden/${area}/uppgifter/${assignmentId + 1}`);
+    // If there is no next assignment.
+    if (assignmentId + 1 >= assignmentAmount) {
+      history.replace(`/omraden/${area}/resultat`);
+    } else {
+      history.replace(`/omraden/${area}/uppgifter/${assignmentId + 1}`);
+    }
   }
+
+  useEffect(() => {
+    firebase.db.collection(`excercises/${area}/assignments`).get()
+      .then(snapshot => {
+        setAssignmentAmount(snapshot.size);
+      })
+  }, [firebase, area]);
 
   return (
     <Layout>
@@ -37,6 +50,7 @@ function AssignmentPage({ match, history }) {
           onClick={navigateBack}
         />
         <Button
+          text={(assignmentId + 1 >= assignmentAmount) ? "Avsluta" : ""}
           assignmentid={assignmentId}
           backgroundColor="lightblue"
           iconColor="black"
