@@ -4,10 +4,10 @@ import { Route, Redirect } from 'react-router-dom';
 
 import * as ROUTES from '../../constants/routes';
 import TheoryPage from '../TheoryPage';
-import TheoryPageEditor from '../Admin/TheoryPageEditor'
+import TheoryPageEditor from '../admin/TheoryPageEditor'
 import AreasPage from '../AreasPage/AreasPage';
 import ResultsPage from '../ResultsPage/ResultsPage';
-import AssignmentEditor from '../Admin/AssignmentEditor';
+import AssignmentEditor from '../admin/AssignmentEditor';
 import AssignmentPage from '../AssignmentPage/AssignmentPage';
 
 function PageContainer(props) {
