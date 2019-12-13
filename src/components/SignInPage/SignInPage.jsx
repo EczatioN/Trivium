@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase/app';
 
-import logo from '../../media/TriviumLogo.svg';
+import logo from '../../media/TriviumLogo.png';
 import { FirebaseContext } from '../Firebase';
 import Title from '../core/Title';
 
