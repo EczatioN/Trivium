@@ -16,7 +16,8 @@ function App() {
 
   if (user) {
     firebase.db.collection("users").doc(user.uid).set({
-      email: user.email
+      email: user.email,
+      name: user.displayName
     });
   }
 

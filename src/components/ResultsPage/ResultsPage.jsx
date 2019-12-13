@@ -7,8 +7,9 @@ import SimpleExpansionPanel from './SimpleExpansionPanel';
 import { withRouter } from 'react-router-dom';
 import { useCollectionOnce, useDocumentOnce } from 'react-firebase-hooks/firestore';
 import LoadingCircle from '../core/LoadingCircle';
+import Button from '../core/Button';
 
-function ResultsPage({ match }) {
+function ResultsPage({ match, history }) {
   const firebase = useContext(FirebaseContext);
   const [assignments, loading, error] = useCollectionOnce(
     firebase.db.collection(`excercises/${match.params.area}/assignments`)
@@ -31,11 +32,21 @@ function ResultsPage({ match }) {
         };
       }
     });
+
+    firebase.db.doc(`excercises/${match.params.area}/user-answers/${firebase.auth.currentUser.uid}`).set({
+      correctAnswers: correctAnswers
+    }, { merge: true });
   }
 
-
-
-
+  function goHome() {
+    history.replace(`/hem`);
+  }
+  function retry() {
+    firebase.db.doc(`excercises/${match.params.area}/user-answers/${firebase.auth.currentUser.uid}`).delete()
+      .then(() => {
+        history.replace(`/omraden/${match.params.area}`);
+      });
+  }
 
   return (
     <React.Fragment>
@@ -53,9 +64,26 @@ function ResultsPage({ match }) {
           <Title>Resultat</Title>
 
           <InfoCard>
-            <Procent red={(correctAnswers / assignments.docs.length) * 100 <= 50} ><strong>{(correctAnswers / assignments.docs.length) * 100}%</strong></Procent>
+            <Procent red={(correctAnswers / assignments.docs.length) * 100 <= 50} ><strong>{Math.round((correctAnswers / assignments.docs.length) * 100)}%</strong></Procent>
             <Resultat>{correctAnswers}/{assignments.docs.length}</Resultat>
           </InfoCard>
+
+          <ButtonContainer>
+            <Button
+              onClick={retry}
+              iconColor="black"
+              icon="replay"
+              text="Försök igen"
+              backgroundColor="lightgreen"
+            />
+            <Button
+              onClick={goHome}
+              iconColor="black"
+              icon="home"
+              text="Gå hem"
+              backgroundColor="lightblue"
+            />
+          </ButtonContainer>
 
           <UppgiftLista>
             {assignments.docs.map(assignment => (
@@ -78,6 +106,10 @@ const Layout = styled.div`
   display:flex;
   flex-direction: column;
   font-family: Nunito;
+`;
+const ButtonContainer = styled.div`
+  display:flex;
+  flex-direction: row;
 `;
 const InfoCard = styled(Card)`
 

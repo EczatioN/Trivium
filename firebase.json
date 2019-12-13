@@ -18,5 +18,8 @@
       }
     ],
     "cleanUrls": true
+  },
+  "functions": {
+    "source": "cloud-functions"
   }
 }

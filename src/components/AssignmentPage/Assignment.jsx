@@ -30,10 +30,11 @@ function Assignment({ area, id }) {
         // If the new answer is not the same as the already stored answer.
         if (newAnswer !== currentAnswer) {
 
+          console.log(answers.assignments);
           // Clone existing answers and modify them to add the new answer.
           var clonedAssignmentAnswers = answers.assignments ? [...answers.assignments] : [];
           clonedAssignmentAnswers[id] = newAnswer;
-
+          console.log(clonedAssignmentAnswers);
           // Update database.
           userAnswersRef.update({
             assignments: clonedAssignmentAnswers
@@ -43,8 +44,8 @@ function Assignment({ area, id }) {
         }
       }
     }
-    // Call pushChanges every 500ms.
-    const watcher = setInterval(pushChanges, 500);
+    // Call pushChanges every 100ms.
+    const watcher = setInterval(pushChanges, 100);
 
     // Cleanup.
     return () => {

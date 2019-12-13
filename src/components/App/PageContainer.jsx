@@ -10,6 +10,7 @@ import ResultsPage from '../ResultsPage/ResultsPage';
 import AssignmentEditor from '../admin/AssignmentEditor';
 import AssignmentPage from '../AssignmentPage/AssignmentPage';
 import ProfilePage from '../ProfilePage';
+import ScoreboardPage from '../ScoreboardPage/ScoreboardPage';
 
 function PageContainer(props) {
   return (
@@ -20,7 +21,7 @@ function PageContainer(props) {
       />
       <Route
         path={ROUTES.SCOREBOARD}
-        render={(props) => "Scoreboard"}
+        render={(props) => <ScoreboardPage />}
       />
       <Route
         path={ROUTES.HOME}
