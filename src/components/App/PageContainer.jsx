@@ -10,6 +10,7 @@ import ResultsPage from '../ResultsPage/ResultsPage';
 import AssignmentEditor from '../admin/AssignmentEditor';
 import AssignmentPage from '../AssignmentPage/AssignmentPage';
 import NewAssignment from '../admin/NewAssignment';
+import ProfilePage from '../ProfilePage';
 
 function PageContainer(props) {
   return (
@@ -28,7 +29,7 @@ function PageContainer(props) {
       />
       <Route
         path={ROUTES.ACCOUNT}
-        render={(props) => "konto"}
+        render={(props) => <ProfilePage {...props} />}
       />
       <Route
         exact path={ROUTES.AREAS}

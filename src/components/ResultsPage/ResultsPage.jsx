@@ -8,61 +8,68 @@ import { withRouter } from 'react-router-dom';
 import { useCollectionOnce, useDocumentOnce } from 'react-firebase-hooks/firestore';
 import LoadingCircle from '../core/LoadingCircle';
 
-function ResultsPage({match}) {
-    const firebase = useContext(FirebaseContext);
-    const [assignments, loading, error] = useCollectionOnce(
-        firebase.db.collection(`excercises/${match.params.area}/assignments`)
-      );
-    const [userAnswers, answersLoading, answersError] = useDocumentOnce(
-        firebase.db.doc(`excercises/${match.params.area}/user-answers/${firebase.auth.currentUser.uid}`)
-      );
-    var correctAnswers = 0;
-    
-    if(assignments && userAnswers){
-        assignments.docs.forEach(assignment => {
-    
-            const answer = userAnswers.data().assignments[
-                assignment.id
-            ];
-            console.log(answer, assignment.data().answer)
-            if(assignment.data()) {
-                if(answer === assignment.data().answer){
-                    correctAnswers++;
-                };
-            }
-        });
-    }
-    
+function ResultsPage({ match }) {
+  const firebase = useContext(FirebaseContext);
+  const [assignments, loading, error] = useCollectionOnce(
+    firebase.db.collection(`excercises/${match.params.area}/assignments`)
+  );
+  const [userAnswers, answersLoading, answersError] = useDocumentOnce(
+    firebase.db.doc(`excercises/${match.params.area}/user-answers/${firebase.auth.currentUser.uid}`)
+  );
+  var correctAnswers = 0;
+
+  if (assignments && userAnswers) {
+    assignments.docs.forEach(assignment => {
+
+      const answer = userAnswers.data().assignments[
+        assignment.id
+      ];
+      console.log(answer, assignment.data().answer)
+      if (assignment.data()) {
+        if (answer === assignment.data().answer) {
+          correctAnswers++;
+        };
+      }
+    });
+  }
+
+
+
+
+
   return (
     <React.Fragment>
       {error &&
         `Error: ${error}`
       }
-      {loading &&
+      {answersError &&
+        `Error: ${answersError}`
+      }
+      {(loading || answersLoading) &&
         <LoadingCircle />
       }
       {assignments && userAnswers &&
         <Layout>
-            <Title>Resultat</Title>
+          <Title>Resultat</Title>
 
-            <InfoCard>
-                <Procent><strong>{(correctAnswers/assignments.docs.length)*100}%</strong></Procent>
-                <Resultat>{correctAnswers}/{assignments.docs.length}</Resultat>
-            </InfoCard>
+          <InfoCard>
+            <Procent red={(correctAnswers / assignments.docs.length) * 100 <= 50} ><strong>{(correctAnswers / assignments.docs.length) * 100}%</strong></Procent>
+            <Resultat>{correctAnswers}/{assignments.docs.length}</Resultat>
+          </InfoCard>
 
-        <UppgiftLista>
-          {assignments.docs.map(assignment => (
-            <UppgiftListaItem key={assignment.id}>
-              <SimpleExpansionPanel
-                assignment={assignment.data()}
-                userAnswers={userAnswers}
-                id={assignment.id}
-              />
-            </UppgiftListaItem>
-          ))}
-        </UppgiftLista>
-      </Layout>
-       }
+          <UppgiftLista>
+            {assignments.docs.map(assignment => (
+              <UppgiftListaItem key={assignment.id}>
+                <SimpleExpansionPanel
+                  assignment={assignment.data()}
+                  userAnswers={userAnswers}
+                  id={assignment.id}
+                />
+              </UppgiftListaItem>
+            ))}
+          </UppgiftLista>
+        </Layout>
+      }
     </React.Fragment>
   )
 }
@@ -73,7 +80,7 @@ const Layout = styled.div`
   font-family: Nunito;
 `;
 const InfoCard = styled(Card)`
-  color: #02c436;
+
   margin: 0rem 1rem 1rem 1rem;
   border-radius: 0.3rem;
   height: fit-content;
@@ -84,7 +91,7 @@ const Resultat = styled.p`
 `;
 const Procent = styled.p`
   text-align:center;
-  color:#02c436;
+  color: ${props => props.red ? "#ed1509" : "#02c436"};
   margin:0.5rem;
   font-size:2rem;
 `;
