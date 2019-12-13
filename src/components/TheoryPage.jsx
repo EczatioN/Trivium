@@ -55,6 +55,7 @@ const Layout = styled.div`
 `;
 
 const TheoryButton = styled(Button)`
+  margin-bottom: 1rem;
 `;
 
 const HeaderImage = styled.img`
