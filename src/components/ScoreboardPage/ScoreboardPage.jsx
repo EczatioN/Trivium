@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { FirebaseContext } from '../Firebase';
 import { withRouter } from 'react-router-dom';
+import Title from '../core/Title';
 
 function ScoreboardPage({ history, match }) {
   const firebase = useContext(FirebaseContext);
@@ -28,12 +29,14 @@ function ScoreboardPage({ history, match }) {
               const userId = answers.id;
               const answerData = answers.data().assignments;
               console.log(userId, answerData);
-              for (var i = 0; i < answerData.length; i++) {
-                if (answerData[i] === assignmentList[i].answer) {
-                  if (userScores[userId]) {
-                    userScores[userId]++;
-                  } else {
-                    userScores[`${userId}`] = 1;
+              if (answerData) {
+                for (var i = 0; i < answerData.length; i++) {
+                  if (answerData[i] === assignmentList[i].answer) {
+                    if (userScores[userId]) {
+                      userScores[userId]++;
+                    } else {
+                      userScores[`${userId}`] = 1;
+                    }
                   }
                 }
               }
@@ -42,12 +45,34 @@ function ScoreboardPage({ history, match }) {
             for (var user in userScores) {
               const doc = await firebase.db.doc(`users/${user}`).get();
               console.log(doc);
-              Object.defineProperty(userScores, doc.data().name,
-                Object.getOwnPropertyDescriptor(userScores, user));
-              delete userScores[user];
+              console.log(Object.getOwnPropertyDescriptor(userScores, user));
+              if (Object.getOwnPropertyDescriptor(userScores, user)) {
+                Object.defineProperty(
+                  userScores,
+                  doc.data().name,
+                  Object.getOwnPropertyDescriptor(userScores, user)
+                );
+                delete userScores[user];
+              }
             }
             console.log(userScores);
-            setTopUsers(userScores);
+            function compare(a, b) {
+              if (a[1] > b[1]) {
+                return -1;
+              }
+              if (a[1] < b[1]) {
+                return 1;
+              }
+              return 0;
+            }
+
+            var sortable = [];
+            for (var a in userScores) {
+              sortable.push([a, userScores[a]]);
+            }
+            sortable.sort(compare);
+            console.log(sortable);
+            setTopUsers(sortable);
           });
         })
       });
@@ -55,13 +80,16 @@ function ScoreboardPage({ history, match }) {
   }, [firebase])
 
   return (
-    <ol>
-      {topUsers &&
-        topUsers.map(user => (
-          <li>{user}</li>
-        ))
-      }
-    </ol>
+    <React.Fragment>
+      <Title>Scoreboard</Title>
+      <ol>
+        {topUsers &&
+          topUsers.map(user => (
+            <li key={user[0]}>{user[0]}: {user[1]}</li>
+          ))
+        }
+      </ol>
+    </React.Fragment>
   )
 }
 
