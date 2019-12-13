@@ -33,6 +33,10 @@ function ResultsPage({match}) {
         });
     }
     
+
+    
+        
+    
   return (
     <React.Fragment>
       {error &&
@@ -46,7 +50,7 @@ function ResultsPage({match}) {
             <Title>Resultat</Title>
 
             <InfoCard>
-                <Procent><strong>{(correctAnswers/assignments.docs.length)*100}%</strong></Procent>
+                <Procent red={(correctAnswers/assignments.docs.length)*100 <= 50} ><strong>{(correctAnswers/assignments.docs.length)*100}%</strong></Procent>
                 <Resultat>{correctAnswers}/{assignments.docs.length}</Resultat>
             </InfoCard>
 
@@ -73,7 +77,7 @@ const Layout = styled.div`
   font-family: Nunito;
 `;
 const InfoCard = styled(Card)`
-  color: #02c436;
+
   margin: 0rem 1rem 1rem 1rem;
   border-radius: 0.3rem;
   height: fit-content;
@@ -84,7 +88,7 @@ const Resultat = styled.p`
 `;
 const Procent = styled.p`
   text-align:center;
-  color:#02c436;
+  color: ${props => props.red ? "#ed1509" : "#02c436"};
   margin:0.5rem;
   font-size:2rem;
 `;
