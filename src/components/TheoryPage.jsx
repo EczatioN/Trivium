@@ -18,7 +18,6 @@ function TheoryPage({ match, history }) {
   function navigateToExcercises() {
     history.push(`/omraden/${match.params.area}/uppgifter/0`);
   }
-
   return (
     <React.Fragment>
       {error &&
@@ -56,6 +55,7 @@ const Layout = styled.div`
 `;
 
 const TheoryButton = styled(Button)`
+  margin-bottom: 1rem;
 `;
 
 const HeaderImage = styled.img`

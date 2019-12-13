@@ -7,3 +7,4 @@ export const EXCERCISES = "/omraden/:area/uppgifter/:id";
 export const ADMIN_AREAS = "/admin/omraden/:area";
 export const RESULTS = "/omraden/:area/resultat";
 export const ADMIN_ASSIGNMENTS = "/admin/omraden/:area/uppgifter/:id";
+export const ADMIN_CREATE_ASSIGNMENT = "/admin/omraden/:area/skapauppgift"

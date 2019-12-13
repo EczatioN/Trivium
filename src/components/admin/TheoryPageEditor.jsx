@@ -55,6 +55,10 @@ function TheoryPageEditor({ match, history }) {
     function navigateToAssignment(id) {
         history.push(`${match.params.area}/uppgifter/${id}`)
     }
+
+    function navigateToNewAssignment() {
+        history.push(`${match.params.area}/skapauppgift`)
+    }
     return (
         <React.Fragment>
             {
@@ -76,7 +80,7 @@ function TheoryPageEditor({ match, history }) {
                     <TextBox defaultValue={excerciseDBname} onChange={setNewDBname} />
                     <ButtonDiv>
                         <Button icon="save" backgroundColor="#43b950" backgroundColorAfter="#3aaa47" text="Spara" onClick={saveData}></Button>
-                        <Button icon="add" backgroundColor="#43b950" text="Lägg till Uppgift"></Button>
+                        <Button icon="add" backgroundColor="#43b950" text="Lägg till Uppgift" onClick= {navigateToNewAssignment}></Button>
                     </ButtonDiv>
                     {assignments &&
                         <StyledOl>
