@@ -20,6 +20,7 @@ function Button({
       className={className}
       backgroundColor={backgroundColor}
       backgroundColorAfter={backgroundColorAfter}
+      iconcolor={iconColor}
     >
       {text &&
         <span>{text}</span>
@@ -41,7 +42,7 @@ const Layout = styled.div`
   height: 3rem;
   padding: 0.25rem 1rem;
   font-size:1.5rem;
-  color:#f3f9fe;
+  color:${props => props.iconcolor ? props.iconcolor : "#f3f9fe"};
   transition: all 0.05s ease-in-out;
   box-shadow: 5px 5px 6px 1px rgba(0, 0, 0, .4);
   &:active {

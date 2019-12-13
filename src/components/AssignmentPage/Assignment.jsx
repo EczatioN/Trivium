@@ -21,7 +21,7 @@ function Assignment({ area, id }) {
 
   const [newAnswer, setNewAnswer] = useState("");
 
-  const currentAnswer = answers?.assignments ? (answers?.assignments[id] ? answers?.assignments[id] : "") : "";
+  const currentAnswer = answers ? (answers.assignments ? (answers.assignments[id] ? answers.assignments[id] : "") : "") : "";
 
   useEffect(() => {
 
@@ -63,7 +63,7 @@ function Assignment({ area, id }) {
       {assignment &&
         <Layout>
           <Title>{`Uppgift ${id + 1}`}</Title>
-          <JsxRenderer
+          <TextRenderer
             code={assignment.question}
           />
           {answersError &&
@@ -96,7 +96,7 @@ const Layout = styled.div`
 const StyledLoadingCircle = styled(LoadingCircle)`
   margin: 10rem 0;
 `;
-const Text = styled.p`
+const TextRenderer = styled(JsxRenderer)`
   margin: 1rem;
   margin-bottom: 0;
 `;
