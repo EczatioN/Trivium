@@ -26,6 +26,7 @@ const StyledListItem = styled.div`
   width: calc(50vw - 1rem - 1rem);
   background: white;
   border-radius: 1rem;
+  margin-bottom: 1rem;
 
   -webkit-box-shadow: 2px 4px 10px 0px rgba(0,0,0,0.4);
   -moz-box-shadow: 2px 4px 10px 0px rgba(0,0,0,0.4);
